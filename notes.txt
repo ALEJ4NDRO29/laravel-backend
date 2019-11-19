@@ -1,0 +1,4 @@
+composer dumpautoload
+
+API-CONTROLLER:
+    php artisan make:controller API/OfficesController --api --resource --model=Office
