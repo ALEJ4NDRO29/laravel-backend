@@ -19,4 +19,10 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'v1'], function () {
     Route::resource('offices', 'API\OfficesController'); // ->only(['index', 'show']);
+    Route::resource('employers', 'API\EmployerController');
+
+    Route::get('tags', function () {
+        error_log('hola');
+        return json_encode(array('hola', 'pipo'));
+    });
 });

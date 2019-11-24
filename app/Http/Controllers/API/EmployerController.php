@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Employer;
 use App\Http\Controllers\Controller;
-use App\Office;
 use Illuminate\Http\Request;
 
-class OfficesController extends Controller
+class EmployerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,7 @@ class OfficesController extends Controller
      */
     public function index()
     {
-        error_log('get all offices');
-        return Office::all();
+        return Employer::all();
     }
 
     /**
@@ -27,30 +26,28 @@ class OfficesController extends Controller
      */
     public function store(Request $request)
     {
-        $office = new Office($request->office);
-        $office->save();
-        return $office;
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Office  $office
+     * @param  \App\Employer  $employer
      * @return \Illuminate\Http\Response
      */
-    public function show(Office $office)
+    public function show(Employer $employer)
     {
-        return $office;
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Office  $office
+     * @param  \App\Employer  $employer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Office $office)
+    public function update(Request $request, Employer $employer)
     {
         //
     }
@@ -58,11 +55,11 @@ class OfficesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Office  $office
+     * @param  \App\Employer  $employer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Office $office)
+    public function destroy(Employer $employer)
     {
-        $office->delete();
+        //
     }
 }

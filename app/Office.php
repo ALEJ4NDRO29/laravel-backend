@@ -11,6 +11,12 @@ class Office extends Model
         'name', 'location'
     ];
 
+
+    public function employer()
+    {
+        $this->hasOne('App\Employer', 'id');
+    }
+
     // protected $hidden = [
     //     'created_at',
     // ];
