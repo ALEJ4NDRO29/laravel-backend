@@ -8,6 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Office::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
+        'slug' => $faker->slug(),
         'location' => $faker->city
     ];
 });

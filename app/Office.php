@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Office extends Model
 {
+    // protected $primaryKey = 'slug';
 
     protected $fillable = [
-        'name', 'location'
+        'name', 'location', 'slug'
     ];
 
 
@@ -17,9 +18,5 @@ class Office extends Model
         $this->hasOne('App\Employer', 'id');
     }
 
-    // protected $hidden = [
-    //     'created_at',
-    // ];
-
-    // protected $table = "offices";
 }
+

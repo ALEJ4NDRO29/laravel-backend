@@ -18,7 +18,9 @@ use Illuminate\Http\Request;
 // });
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::resource('offices', 'API\OfficesController'); // ->only(['index', 'show']);
+    Route::resource('offices', 'API\OfficesController')->except(['show']);
+    Route::get('offices/{slug}', 'API\OfficesController@findSlug');
+
     Route::resource('employers', 'API\EmployerController');
 
     Route::get('tags', function () {

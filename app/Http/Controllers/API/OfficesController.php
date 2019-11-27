@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Office;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-class OfficesController extends Controller
+class OfficesController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,6 @@ class OfficesController extends Controller
      */
     public function index()
     {
-        error_log('get all offices');
         return Office::all();
     }
 
@@ -28,8 +28,15 @@ class OfficesController extends Controller
     public function store(Request $request)
     {
         $office = new Office($request->office);
+        $office->slug = $this->generateSlug($office->name);
+        // $office->slug = Str::slug($office->name . ' ' . $office->id, '-');
         $office->save();
         return $office;
+    }
+
+    public function findSlug($slug)
+    {
+        return Office::query()->where('slug', $slug)->get();
     }
 
     /**
