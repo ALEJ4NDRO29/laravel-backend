@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\ApiController;
 use App\Office;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class OfficesController extends ApiController
 {
