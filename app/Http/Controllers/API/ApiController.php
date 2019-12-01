@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
+    protected $transformer = null;
+
     public function generateSlug($key)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -19,4 +20,19 @@ class ApiController extends Controller
 
         return Str::slug($key.'-'.$randomString);
     }
+
+    public function reapondsUnauthorized($msg = 'Unauthorized'){
+        return response($msg, 401, []);
+    }
+
+    protected function respondWithTransformer($data, $statusCode = 200, $headers = [])
+    {
+        // return $data;
+
+        if($this->transformer != null ) {
+            $data = $this->transformer->item($data);
+            return response($data, $statusCode, $headers);
+        }
+    }
+
 }

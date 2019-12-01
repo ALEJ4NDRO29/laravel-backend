@@ -28,7 +28,7 @@ services:
     tty: true
     ports:
       - "7777:80"
-      - "443:443"
+      # - "443:443"
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
@@ -41,8 +41,8 @@ services:
     container_name: db
     restart: unless-stopped
     tty: true
-    ports:
-      - "3306:3306"
+    # ports:
+    #   - "3306:3306"
     environment:
       MYSQL_DATABASE: laravel_crud
       MYSQL_USER: admin
