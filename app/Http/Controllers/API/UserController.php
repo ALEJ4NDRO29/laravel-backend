@@ -3,11 +3,22 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\ApiController;
+use App\Transformers\UserTransformer;
 use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends ApiController
 {
+
+    public function __construct(UserTransformer $transformer)
+    // public function __construct($a)
+    {
+        // error_log(print_r($transformer, 1));
+        $this->transformer = $transformer;
+        $this->middleware('auth.api');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +26,7 @@ class UserController extends ApiController
      */
     public function index()
     {
-        //
+        return $this->respondWithTransformer(auth()->user());
     }
 
     /**

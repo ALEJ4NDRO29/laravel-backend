@@ -16,7 +16,7 @@ class AuthController extends ApiController
     // public function __construct($a)
     {
         // error_log(print_r($transformer, 1));
-        $this->transformer = $transformer;   
+        $this->transformer = $transformer;
     }
 
     public function login(LoginUser $request)
@@ -45,4 +45,9 @@ class AuthController extends ApiController
         
         return $user;
     }
+
+    // public function userFromJwt()
+    // {
+    //     return $this->respondWithTransformer(auth()->user());
+    // }
 }

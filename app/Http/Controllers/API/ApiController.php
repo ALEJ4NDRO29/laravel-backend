@@ -27,11 +27,15 @@ class ApiController extends Controller
 
     protected function respondWithTransformer($data, $statusCode = 200, $headers = [])
     {
-        // return $data;
-
         if($this->transformer != null ) {
-            $data = $this->transformer->item($data);
+            if($data instanceof Collection) {
+                $data = $this->transformer->collection($data);
+            } else {
+                $data = $this->transformer->item($data);
+            }
             return response($data, $statusCode, $headers);
+        } else {
+            throw new Exception("Empty transformer", 1);
         }
     }
 

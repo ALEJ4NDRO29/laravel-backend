@@ -51,7 +51,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function getTokenAttribute()
     {
-        error_log('getTokenAttribute'); // TODO
         return JWTAuth::fromUser($this);
     }
 
@@ -62,7 +61,6 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTIdentifier()
     {
-        error_log('getJWTIdentifier'); // TODO
         return $this->getKey();
     }
 

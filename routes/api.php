@@ -20,6 +20,8 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'v1'], function () {
     Route::post('auth/register', 'API\AuthController@register');
     Route::post('auth', 'API\AuthController@login');
+    // Route::get('user', 'API\AuthController@userFromJwt')->middleware('auth.api');
+    Route::get('user', 'API\UserController@index');
 
     Route::resource('offices', 'API\OfficesController')->except(['show']);
     Route::get('offices/{slug}', 'API\OfficesController@findSlug');
