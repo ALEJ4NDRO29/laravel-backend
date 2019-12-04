@@ -7,7 +7,6 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
-use Tymon\JWTAuth\JWTAuth;
 
 class AuthenticateWithJWT extends BaseMiddleware
 {

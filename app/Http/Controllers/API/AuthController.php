@@ -8,14 +8,13 @@ use App\Http\Requests\API\RegisterUser;
 use App\Transformers\UserTransformer;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends ApiController
 {
 
     public function __construct(UserTransformer $transformer)
-    // public function __construct($a)
     {
-        // error_log(print_r($transformer, 1));
         $this->transformer = $transformer;
     }
 
@@ -42,12 +41,32 @@ class AuthController extends ApiController
 
         error_log($request);
         error_log('Create new user');
-        
+
         return $user;
     }
 
-    // public function userFromJwt()
-    // {
-    //     return $this->respondWithTransformer(auth()->user());
-    // }
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function handleProviderCallback($provider)
+    {
+        $socialUser = Socialite::driver($provider)->user();
+
+        error_log(print_r($socialUser->getNickname(), 1));
+        error_log(print_r($socialUser, 1));
+        $user = User::firstOrCreate(
+            [
+                'social' => $socialUser->getId()
+            ],
+            [
+                'social' => $socialUser->getId(),
+                'email' => $socialUser->getEmail(),
+                'username' => $socialUser->getNickname()
+            ]
+        );
+
+        return response($user);
+    }
 }

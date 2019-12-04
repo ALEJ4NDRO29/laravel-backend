@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AllowedAuthProviders;
 use Illuminate\Http\Request;
 
 /*
@@ -20,16 +21,18 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'v1'], function () {
     Route::post('auth/register', 'API\AuthController@register');
     Route::post('auth', 'API\AuthController@login');
-    // Route::get('user', 'API\AuthController@userFromJwt')->middleware('auth.api');
     Route::get('user', 'API\UserController@index');
 
+    // Social
+    Route::get('auth/{provider}', 'API\AuthController@redirectToProvider')->middleware(['allowedAuthProviders', 'web']);
+    Route::get('auth/{provider}/callback', 'API\AuthController@handleProviderCallback')->middleware(['allowedAuthProviders', 'web']);
+
+
+    // Route::get('user', 'API\AuthController@userFromJwt')->middleware('auth.api');
+    
     Route::resource('offices', 'API\OfficesController')->except(['show']);
     Route::get('offices/{slug}', 'API\OfficesController@findSlug');
 
     Route::resource('employers', 'API\EmployerController');
 
-    Route::get('tags', function () {
-        error_log('hola');
-        return json_encode(array('hola', 'pipo'));
-    });
 });
