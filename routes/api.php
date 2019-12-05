@@ -2,6 +2,8 @@
 
 use App\Http\Middleware\AllowedAuthProviders;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +37,16 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::resource('employers', 'API\EmployerController');
 
+    // REDIS TESTS
+    Route::get('redisping', function () {
+        return Redis::command('ping');
+    });
+
+    Route::get('redisput', function () {
+        return Redis::set('name', 'Test');
+    });
+
+    Route::get('redisget', function () {
+        return Redis::get('name');
+    });
 });
