@@ -49,9 +49,9 @@ return [
             'host' => env('DB_HOST', '127.0.0.1'), // localhost
             // 'host' => env('DB_HOST', 'db'), // docker
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'laravel_crud'),
+            'database' => env('DB_DATABASE', 'laravel_world'),
             'username' => env('DB_USERNAME', 'admin'),
-            'password' => env('DB_PASSWORD', 'hola1234'),
+            'password' => env('DB_PASSWORD', 'Hola1234@'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

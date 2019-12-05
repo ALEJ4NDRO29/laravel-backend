@@ -17,6 +17,8 @@ services:
     volumes:
       - ./:/var/www
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    links:
+      - db
     networks:
       - app-network
 
@@ -27,8 +29,8 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "7777:80"
-      # - "443:443"
+      - "80:80"
+      - "443:443"
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
@@ -41,13 +43,13 @@ services:
     container_name: db
     restart: unless-stopped
     tty: true
-    # ports:
-    #   - "3306:3306"
+    ports:
+      - "3306:3306"
     environment:
-      MYSQL_DATABASE: laravel_crud
+      MYSQL_DATABASE: laravel_world
       MYSQL_USER: admin
-      MYSQL_PASSWORD: hola1234
-      MYSQL_ROOT_PASSWORD: hola1234
+      MYSQL_PASSWORD: Hola1234@
+      MYSQL_ROOT_PASSWORD: Hola1234@
       MYSQL_ROOT_HOST: app
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
