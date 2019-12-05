@@ -32,8 +32,13 @@ Route::group(['prefix' => 'v1'], function () {
 
     // Route::get('user', 'API\AuthController@userFromJwt')->middleware('auth.api');
     
+    // Offices
     Route::resource('offices', 'API\OfficesController')->except(['show']);
     Route::get('offices/{slug}', 'API\OfficesController@findSlug');
+
+    // Hotel
+    Route::resource('hotel', 'API\HotelController')->except(['show']);
+    Route::get('hotel/{slug}', 'API\HotelController@findSlug');
 
     Route::resource('employers', 'API\EmployerController');
 
