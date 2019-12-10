@@ -15,7 +15,7 @@ class Employer extends Model
 
     public function office()
     {
-        $this->hasMany('App\Office', 'id');
+        return $this->hasMany('App\Office', 'id');
     }
 
 }

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class HotelsSeeder extends Seeder
+class EmployersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class HotelsSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Hotel::class, 10)
+        factory(App\Employer::class, 10)
             ->create();
     }
 }

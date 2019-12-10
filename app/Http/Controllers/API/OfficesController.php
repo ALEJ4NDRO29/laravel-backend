@@ -4,10 +4,17 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\ApiController;
 use App\Office;
+use App\Transformers\OfficesTransformer;
 use Illuminate\Http\Request;
 
 class OfficesController extends ApiController
 {
+
+    public function __construct(OfficesTransformer $transformer)
+    {
+        $this->transformer = $transformer;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +42,10 @@ class OfficesController extends ApiController
 
     public function findSlug($slug)
     {
-        return Office::query()->where('slug', $slug)->get();
+        $data = Office::query()->where('slug', $slug)->get()->first();
+        // error_log($data);
+        // return $data->employer->name;
+        return $this->respondWithTransformer($data);
     }
 
     /**
