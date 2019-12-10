@@ -45,13 +45,11 @@ class AuthController extends ApiController
         return $user;
     }
 
-    public function redirectToProvider($provider)
-    {
+    public function redirectToProvider($provider) {
         return Socialite::driver($provider)->redirect();
     }
 
-    public function handleProviderCallback($provider)
-    {
+    public function handleProviderCallback($provider) {
         $socialUser = Socialite::driver($provider)->user();
 
         error_log(print_r($socialUser->getNickname(), 1));

@@ -7,6 +7,11 @@
             "label": "Show Log",
             "type": "shell",
             "command": "tail -f /var/log/php/php_errors.log"
+        },
+        {
+            "label": "Start Server",
+            "type": "shell",
+            "command": "sudo service apache2 stop; sudo service nginx stop; sudo service mysql stop; sudo docker-compose up"
         }
     ]
 }
