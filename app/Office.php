@@ -15,7 +15,7 @@ class Office extends Model
 
     public function employer()
     {
-        $this->hasOne('App\Employer', 'id');
+        return $this->hasOne('App\Employer', 'id');
     }
 
 }

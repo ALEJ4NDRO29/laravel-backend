@@ -2,6 +2,8 @@
 
 namespace App\Transformers;
 
+use App\Office;
+
 class UserTransformer extends Transformer {
 
     protected $resourceName = 'user';

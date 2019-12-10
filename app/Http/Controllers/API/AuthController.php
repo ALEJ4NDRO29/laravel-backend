@@ -39,8 +39,8 @@ class AuthController extends ApiController
             'password' => $request->input('user.password')
         ]);
 
-        error_log($request);
-        error_log('Create new user');
+        // error_log($request);
+        // error_log('Create new user');
 
         return $user;
     }
@@ -54,8 +54,8 @@ class AuthController extends ApiController
     {
         $socialUser = Socialite::driver($provider)->user();
 
-        error_log(print_r($socialUser->getNickname(), 1));
-        error_log(print_r($socialUser, 1));
+        // error_log(print_r($socialUser->getNickname(), 1));
+        // error_log(print_r($socialUser, 1));
         $user = User::firstOrCreate(
             [
                 'social' => $socialUser->getId()
