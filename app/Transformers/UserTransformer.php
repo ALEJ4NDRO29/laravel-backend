@@ -17,4 +17,11 @@ class UserTransformer extends Transformer {
         ];
     }
 
+    public static function transforms($data) {
+        $pila = array();
+        foreach($data as $user){
+            array_push($pila, 'username', $user['username']);
+        }
+        return $pila;
+    }
 }

@@ -2,16 +2,23 @@
 
 namespace App;
 
+use App\Traits\Hotels\UsuHotable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Hotel extends Model {
+
+    use UsuHotable;
 
     protected $table = "hoteles";
 
     protected $fillable = [
         'name', 'stars', 'country', 'company'
     ];
+
+    public function usuarios() {
+        return $this->belongsToMany('App\User');
+    }
 
     // public static function getHotel() {
         

@@ -4,9 +4,14 @@ namespace App\Http\Controllers\API;
 
 use App\Hotel;
 use App\Http\Controllers\ApiController;
+use App\Transformers\HotelsTransformer;
 use Illuminate\Http\Request;
 
 class HotelController extends ApiController {
+
+    public function __construct(HotelsTransformer $transformer) {
+        $this->transformer = $transformer;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +45,15 @@ class HotelController extends ApiController {
     }
 
     public function findSlug($slug) {
-        return Hotel::query()->where('slug', $slug)->get();
+        $caca = "";
+        $hotels = Hotel::query()->where('slug', $slug)->get()->first();
+        // foreach ($hotels->hotels as $user){
+        //     $caca.=$user;
+        // }
+        // return $hotels;
+        // return $hotels->users;
+        // $hotels = Hotel::all()->pluck('name');
+        return $this->respondWithTransformer($hotels);
     }
 
     /**

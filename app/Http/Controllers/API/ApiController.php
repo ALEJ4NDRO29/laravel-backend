@@ -38,5 +38,4 @@ class ApiController extends Controller
             throw new Exception("Empty transformer", 1);
         }
     }
-
 }
