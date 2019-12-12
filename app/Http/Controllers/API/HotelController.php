@@ -18,7 +18,8 @@ class HotelController extends ApiController {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return Hotel::all();
+        $hotels = Hotel::all();
+        return $this->respondWithTransformer($hotels);
     }
 
     /**

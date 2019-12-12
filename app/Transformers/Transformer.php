@@ -2,7 +2,8 @@
 
 namespace App\Transformers;
 
-use Tymon\JWTAuth\Claims\Collection;
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Collection;
 
 abstract class Transformer {
 
@@ -14,7 +15,7 @@ abstract class Transformer {
     public function collection(Collection $data)
     {   
         return [
-            str_plural($this->resourceName) => $data->map([$this, 'transform'])
+            Str::plural($this->resourceName) => $data->map([$this, 'transform'])
         ];
 
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Collection;
 
 class ApiController extends Controller
 {

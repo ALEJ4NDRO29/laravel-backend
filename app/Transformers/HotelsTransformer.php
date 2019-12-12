@@ -16,7 +16,8 @@ class HotelsTransformer extends Transformer {
             'stars'      => $data['stars'],
             'contry'  => $data['contry'],
             'company'  => $data['company'],
-            'hotelUsu' => UserTransformer::transforms($data['usuarios'])
+            'hotelUsu' => UserTransformer::transforms($data['usuarios']),
+            // 'hotelUsu' => $data['usuarios'] ->transform($data['usuarios']),
             // 'hotelUsu'  => [
             // 'id'      => $data['usuarios'][0]['id'],
             //     // 'name'    => $data['employer']['name'],
