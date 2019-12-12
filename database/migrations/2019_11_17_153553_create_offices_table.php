@@ -19,7 +19,7 @@ class CreateOfficesTable extends Migration
             $table->string('slug')->unique();
             $table->string('name');
             $table->string('location')->nullable();
-            
+
             $table->timestamps();
 
             $table->foreign('employer_id')

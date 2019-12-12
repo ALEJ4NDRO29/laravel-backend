@@ -13,6 +13,7 @@ class OfficesController extends ApiController
     public function __construct(OfficesTransformer $transformer)
     {
         $this->transformer = $transformer;
+        $this->middleware('auth.api');
     }
 
     /**
@@ -22,7 +23,8 @@ class OfficesController extends ApiController
      */
     public function index()
     {
-        return Office::all();
+        return $this->respondWithTransformer(Office::all());
+        // return Office::all();
     }
 
     /**
@@ -43,8 +45,6 @@ class OfficesController extends ApiController
     public function findSlug($slug)
     {
         $data = Office::query()->where('slug', $slug)->get()->first();
-        // error_log($data);
-        // return $data->employer->name;
         return $this->respondWithTransformer($data);
     }
 
