@@ -13,7 +13,7 @@ class OfficesController extends ApiController
     public function __construct(OfficesTransformer $transformer)
     {
         $this->transformer = $transformer;
-        $this->middleware('auth.api');
+        // $this->middleware('auth.api');
     }
 
     /**

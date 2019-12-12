@@ -26,9 +26,9 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('user', 'API\UserController@index');
 
     // Social
+    Route::get('auth/social', 'API\AuthController@loginSocial');
     Route::get('auth/{provider}', 'API\AuthController@redirectToProvider')->middleware(['allowedAuthProviders', 'web']);
     Route::get('auth/{provider}/callback', 'API\AuthController@handleProviderCallback')->middleware(['allowedAuthProviders', 'web']);
-
 
     // Route::get('user', 'API\AuthController@userFromJwt')->middleware('auth.api');
     

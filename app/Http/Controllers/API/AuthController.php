@@ -7,7 +7,9 @@ use App\Http\Requests\API\LoginUser;
 use App\Http\Requests\API\RegisterUser;
 use App\Transformers\UserTransformer;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends ApiController
@@ -64,7 +66,18 @@ class AuthController extends ApiController
                 'username' => $socialUser->getNickname()
             ]
         );
+        Storage::disk('local')->put('file.txt',$this->respondWithTransformer($user));
+        return redirect()->to('http://localhost:4200/sociallogin');
+    }
 
-        return response($user);
+    public function loginSocial(Request $request)
+    {
+        error_log('socialLogin');
+        $exists = Storage::disk('local')->exists('file.txt');
+        if($exists){
+            $user = Storage::disk('local')->get('file.txt');
+            Storage::disk('local')->delete('file.txt');
+        }
+        return explode('GMT',$user)[1];
     }
 }
