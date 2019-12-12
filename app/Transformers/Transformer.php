@@ -2,8 +2,8 @@
 
 namespace App\Transformers;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 abstract class Transformer {
 
@@ -17,7 +17,6 @@ abstract class Transformer {
         return [
             Str::plural($this->resourceName) => $data->map([$this, 'transform'])
         ];
-
     }
 
     /**
