@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Employer;
 use App\Http\Controllers\ApiController;
 use App\Office;
 use App\Transformers\OfficesTransformer;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class OfficesController extends ApiController
@@ -80,5 +83,16 @@ class OfficesController extends ApiController
     public function destroy(Office $office)
     {
         $office->delete();
+    }
+
+    public function setManager($office, $employer)
+    {
+        try {
+            $office = Office::setManager($office, $employer);
+            return $this->respondWithTransformer($office);
+        } catch (Exception $e) {
+            $this->addError($e->getMessage());
+            return $this->respondsWithErrors(500);
+        }
     }
 }

@@ -14,10 +14,13 @@ class Office extends Model
         'name', 'location', 'slug'
     ];
 
+    /**
+     * @return Employer
+     */
     public function manager()
     {
         return $this->hasOne(Employer::class, 'id', 'employer_id');
     }
- 
+
 }
 
