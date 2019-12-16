@@ -10,7 +10,6 @@ class OfficesTransformer extends Transformer {
 
     public function transform($data)
     {
-
         return [
             'id'        => $data['id'],
             'slug'      => $data['slug'],
@@ -22,24 +21,5 @@ class OfficesTransformer extends Transformer {
             ]
         ];
 
-        // if ($data['employer'] == null) {
-        //     return [
-        //         'id'        => $data['id'],
-        //         'slug'      => $data['slug'],
-        //         'name'      => $data['name'],
-        //         'location'  => $data['location'],
-        //     ];
-        // } else {
-        //     return [
-        //         'id'        => $data['id'],
-        //         'slug'      => $data['slug'],
-        //         'name'      => $data['name'],
-        //         'location'  => $data['location'],
-        //         'employer'  => [
-        //             'id'      => $data['employer']['id'],
-        //             'name'    => $data['employer']['name'],
-        //         ]
-        //     ];
-        // }
     }
 }
