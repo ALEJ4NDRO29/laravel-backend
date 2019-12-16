@@ -35,6 +35,7 @@ Route::group(['prefix' => 'v1'], function () {
     // Offices
     Route::resource('offices', 'API\OfficesController')->except(['show']);
     Route::get('offices/{slug}', 'API\OfficesController@findSlug');
+    Route::post('offices/{office}/manager/{employer}', 'API\OfficesController@setManager');
 
     // Hotel
     Route::resource('hotel', 'API\HotelController')->except(['show']);
