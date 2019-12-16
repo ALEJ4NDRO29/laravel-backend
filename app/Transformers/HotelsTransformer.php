@@ -2,21 +2,23 @@
 
 namespace App\Transformers;
 
-use App\Hotel;
-
 class HotelsTransformer extends Transformer {
 
     protected $resourceName = 'hotels';
 
+
     public function transform($data)
     {
+        $userTrans = new ProfileTransformer();
+        
         return [
             'id'        => $data['id'],
             'slug'      => $data['slug'],
             'stars'      => $data['stars'],
             'contry'  => $data['contry'],
             'company'  => $data['company'],
-            'hotelUsu' => UserTransformer::transforms($data['usuarios']),
+            'hotelUsu' => $userTrans->collection($data['usuarios'])
+            ,
             // 'hotelUsu' => $data['usuarios'] ->transform($data['usuarios']),
             // 'hotelUsu'  => [
             // 'id'      => $data['usuarios'][0]['id'],
