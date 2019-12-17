@@ -39,23 +39,36 @@ services:
 
   #MySQL Service
   db:
-    image: mysql:5.7.22
+    # image: mysql:5.7.22
+    image: mariadb:5.5.64
     container_name: db
     restart: unless-stopped
     tty: true
-    ports:
-      - "3306:3306"
+    # ports:
+      # - "33060:3306"
     environment:
       MYSQL_DATABASE: laravel_world
       MYSQL_USER: admin
       MYSQL_PASSWORD: Hola1234@
       MYSQL_ROOT_PASSWORD: Hola1234@
       MYSQL_ROOT_HOST: app
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+      # SERVICE_TAGS: dev
+      # SERVICE_NAME: mysql
     volumes:
       - dbdata:/var/lib/mysql/
       - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+
+  #REDIS
+  redis:
+    image: redis:5.0.7
+    container_name: redis
+    restart: unless-stopped
+    tty: true
+  #   volumes:
+  #     - dbdata:/var/lib/mysql/
+  #     - ./mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - app-network
 
