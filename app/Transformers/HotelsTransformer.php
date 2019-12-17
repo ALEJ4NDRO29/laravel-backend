@@ -14,6 +14,7 @@ class HotelsTransformer extends Transformer {
         return [
             'id'        => $data['id'],
             'slug'      => $data['slug'],
+            'name'      => $data['name'],
             'stars'      => $data['stars'],
             'contry'  => $data['contry'],
             'company'  => $data['company'],
