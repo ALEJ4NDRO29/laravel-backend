@@ -41,10 +41,11 @@ class AuthController extends ApiController
             'password' => $request->input('user.password')
         ]);
 
-        // error_log($request);
-        // error_log('Create new user');
-
-        return $user;
+        $credentials['username'] = $request->input('user.username');
+        $credentials['password'] = $request->input('user.password');
+        Auth::once($credentials);
+        
+        return $this->respondWithTransformer(auth()->user());
     }
 
     public function redirectToProvider($provider) {
