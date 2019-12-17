@@ -13,7 +13,7 @@ class Hotels extends Migration {
     public function up() {
         Schema::create('hoteles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('slug')->unique();
+            $table->string('slug', 50)->unique();
             $table->string('name');
             $table->string('stars');
             $table->string('country');
