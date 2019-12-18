@@ -12,6 +12,23 @@
             "label": "Start Server",
             "type": "shell",
             "command": "sudo service apache2 stop; sudo service nginx stop; sudo service mysql stop; sudo docker-compose up"
+        },
+        {
+            "label": "Sh php",
+            "type": "shell",
+            "command": "sudo docker exec -it app sh",
+            "problemMatcher": []
+        },
+        {
+            "label": "DB console",
+            "type": "shell",
+            "command": "sudo docker exec -it db mysql -u admin -p",
+            "problemMatcher": []
+        },
+        {
+            "label": "DB shell",
+            "type": "shell",
+            "command": "sudo docker exec -it db bash"
         }
     ]
 }

@@ -16,7 +16,7 @@ class CreateOfficesTable extends Migration
         Schema::create('offices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('employer_id')->nullable();
-            $table->string('slug', 50)->unique();
+            $table->string('slug', 191)->unique();
             $table->string('name');
             $table->string('location')->nullable();
 
