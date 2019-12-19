@@ -47,6 +47,17 @@ trait UsuHotable {
         }
 
 
+        $array = array (
+            $hotel['slug'] => array(
+               "view" => 1
+            )
+        );
+
+        $caca = json_encode($array);
+        Log::info($caca);
+
+
+        Log::debug('redis set ' . $hotel['id']);
         Redis::set($redisKey, $hotel['id']);
     }
 }
