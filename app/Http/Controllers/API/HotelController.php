@@ -55,7 +55,7 @@ class HotelController extends ApiController {
         $userId = auth()->user();
         
         if($userId != null && $hotel) {
-            $hotel->redisIncrements($transformer, $userId);
+            $hotel->redisIncrements($transformer['hotels'], $userId);
         }
 
         return $this->respondWithTransformer($hotel);

@@ -26,17 +26,27 @@ trait UsuHotable {
     public function redisIncrements($hotel, User $user)
     {
         $redisKey = 'user:' . $user['id'] . ':hotelStats';
+        Log::debug($redisKey);
 
         /**
          * 1- Comprobar datos guardados en redis
          *  1.1- No ha visitado nada
          *  1.2- No ha visitado ese hotel
-         *  1.3- Ya ha visitado ese hotel
+         * 
          */
 
+        $redisResp = Redis::get($redisKey);
+        Log::debug(print_r($redisResp, 1));
         
+        if($redisResp == null) {
+            Log::debug('1.1- No ha visitado nada');
+        } else if($redisResp[$hotel['slug']] == null) {
+            Log::debug(' 1.2- No ha visitado ese hotel');
+        } else {
+            Log::debug('1.3- Ya ha visitado ese hotel');
+        }
 
-        Log::debug('redis set ' . $hotel['hotels']['id']);
-        Redis::set($redisKey, $hotel['hotels']['id']);
+
+        Redis::set($redisKey, $hotel['id']);
     }
 }
