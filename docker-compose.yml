@@ -66,14 +66,14 @@ services:
     container_name: redis
     restart: unless-stopped
     tty: true
-  #   volumes:
-  #     - dbdata:/var/lib/mysql/
-  #     - ./mysql/my.cnf:/etc/mysql/my.cnf
+    volumes:
+      - redis:/data
     networks:
       - app-network
 
 volumes:
   dbdata:
+  redis:
 
 #Docker Networks
 networks:
@@ -82,4 +82,6 @@ networks:
 #Volumes
 volumes:
   dbdata:
+    driver: local
+  redis:
     driver: local

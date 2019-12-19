@@ -44,8 +44,6 @@ COPY --chown=www:www . /var/www
 
 RUN chmod 777 /var/www -R 
 
-CMD mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' WITH GRANT OPTION; FLUSH PRIVILEGES;"
-
 # Change current user to www
 USER www
 

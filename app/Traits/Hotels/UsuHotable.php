@@ -3,6 +3,9 @@
 namespace App\Traits\Hotels;
 
 use App\Hotel;
+use App\User;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 trait UsuHotable {
     
@@ -18,5 +21,22 @@ trait UsuHotable {
 
     public function favorites() {
         return $this->belongsToMany(Hotel::class, 'favorites', 'user_id', 'hotel_id')->withTimestamps();
+    }
+
+    public function redisIncrements($hotel, User $user)
+    {
+        $redisKey = 'user:' . $user['id'] . ':hotelStats';
+
+        /**
+         * 1- Comprobar datos guardados en redis
+         *  1.1- No ha visitado nada
+         *  1.2- No ha visitado ese hotel
+         *  1.3- Ya ha visitado ese hotel
+         */
+
+        
+
+        Log::debug('redis set ' . $hotel['hotels']['id']);
+        Redis::set($redisKey, $hotel['hotels']['id']);
     }
 }

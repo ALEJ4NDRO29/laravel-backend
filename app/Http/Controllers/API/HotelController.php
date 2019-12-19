@@ -6,6 +6,8 @@ use App\Hotel;
 use App\Http\Controllers\ApiController;
 use App\Transformers\HotelsTransformer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 class HotelController extends ApiController {
 
@@ -18,6 +20,7 @@ class HotelController extends ApiController {
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        // TODO: Redis get...
         $hotels = Hotel::all();
         return $this->respondWithTransformer($hotels);
     }
@@ -45,16 +48,17 @@ class HotelController extends ApiController {
         return $hotel;
     }
 
-    public function findSlug($slug) {
-        $caca = "";
-        $hotels = Hotel::query()->where('slug', $slug)->get()->first();
-        // foreach ($hotels->hotels as $user){
-        //     $caca.=$user;
-        // }
-        // return $hotels;
-        // return $hotels->users;
-        // $hotels = Hotel::all()->pluck('name');
-        return $this->respondWithTransformer($hotels);
+    public function findSlug($slug) { 
+        $hotel = Hotel::query()->where('slug', $slug)->get()->first();
+        $transformer = $this->transformer->item($hotel);
+
+        $userId = auth()->user();
+        
+        if($userId != null && $hotel) {
+            $hotel->redisIncrements($transformer, $userId);
+        }
+
+        return $this->respondWithTransformer($hotel);
     }
 
     /**
