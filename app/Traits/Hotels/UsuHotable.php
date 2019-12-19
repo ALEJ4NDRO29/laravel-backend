@@ -34,9 +34,17 @@ trait UsuHotable {
          *  1.3- Ya ha visitado ese hotel
          */
 
-        
+        $array = array (
+            $hotel['slug'] => array(
+               "view" => 1
+            )
+        );
 
-        Log::debug('redis set ' . $hotel['hotels']['id']);
-        Redis::set($redisKey, $hotel['hotels']['id']);
+        $caca = json_encode($array);
+        Log::info($caca);
+
+
+        Log::debug('redis set ' . $hotel['id']);
+        Redis::set($redisKey, $hotel['id']);
     }
 }
