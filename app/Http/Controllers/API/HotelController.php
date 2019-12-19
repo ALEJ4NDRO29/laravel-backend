@@ -21,6 +21,14 @@ class HotelController extends ApiController {
      */
     public function index() {
         // TODO: Redis get...
+        /**
+         * Ordenar array que devuelve redis
+         * 
+         * Copiar de base de datos los que se encuentren en redis
+         * a un array temporal para tener el resto de datos
+         * 
+         * Los que existan en redis aparecen arriba
+         */
         $hotels = Hotel::all();
         return $this->respondWithTransformer($hotels);
     }
