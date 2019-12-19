@@ -7,57 +7,55 @@ use App\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
-trait UsuHotable {
-    
-    public function favorite(Hotel $hotel) {
-        if (! $this->hasFavorited($hotel)) {
+trait UsuHotable
+{
+
+    public function favorite(Hotel $hotel)
+    {
+        if (!$this->hasFavorited($hotel)) {
             return $this->favorites()->attach($hotel);
         }
     }
 
-    public function hasFavorited(Hotel $hotel) {
-        return !! $this->favorites()->where('hotel_id', $hotel->id)->count();
+    public function hasFavorited(Hotel $hotel)
+    {
+        return !!$this->favorites()->where('hotel_id', $hotel->id)->count();
     }
 
-    public function favorites() {
+    public function favorites()
+    {
         return $this->belongsToMany(Hotel::class, 'favorites', 'user_id', 'hotel_id')->withTimestamps();
     }
 
     public function redisIncrements($hotel, User $user)
     {
+        $slug = $hotel['slug'];
+        $array = array();
         $redisKey = 'user:' . $user['id'] . ':hotelStats';
         Log::debug($redisKey);
 
-        /**
-         * 1- Comprobar datos guardados en redis
-         *  1.1- No ha visitado nada
-         *  1.2- No ha visitado ese hotel
-         * 
-         */
-
         $redisResp = Redis::get($redisKey);
-        Log::debug(print_r($redisResp, 1));
+        $redisRespArray = json_decode($redisResp, true);
         
-        if($redisResp == null) {
-            Log::debug('1.1- No ha visitado nada');
-        } else if($redisResp[$hotel['slug']] == null) {
-            Log::debug(' 1.2- No ha visitado ese hotel');
+
+        if ($redisResp == null || !array_key_exists($slug, $redisRespArray)) {
+            Log::debug('Añadir nuevo');
+            $array = array(
+                "view" => 1
+            );
+
+            // AÑADIR NUEVO
+            $redisRespArray[$slug] = $array;
         } else {
-            Log::debug('1.3- Ya ha visitado ese hotel');
+            Log::debug('Ampliar');
+            $redisRespArray[$slug]['view']++;
         }
 
+        $json = json_encode($redisRespArray);
 
-        $array = array (
-            $hotel['slug'] => array(
-               "view" => 1
-            )
-        );
-
-        $caca = json_encode($array);
-        Log::info($caca);
-
-
-        Log::debug('redis set ' . $hotel['id']);
-        Redis::set($redisKey, $hotel['id']);
+        Log::debug('Redis set:');
+        Log::debug($json);
+        
+        Redis::set($redisKey, $json);
     }
 }
