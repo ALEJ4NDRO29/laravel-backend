@@ -29,8 +29,32 @@ class HotelController extends ApiController {
          * 
          * Los que existan en redis aparecen arriba
          */
-        $hotels = Hotel::all();
+
+        $user = auth()->user();
+        
+        if($user != null) {
+            Log::debug("Logged user");
+
+            $hotelsDB = Hotel::all();
+            $hotels = $this->userShort($user, $hotelsDB);
+        } else {
+            $hotels = Hotel::all();
+        }
+        
         return $this->respondWithTransformer($hotels);
+    }
+
+    /**
+     * @param user
+     * @param hotels list
+     * @return \Illuminate\Database\Eloquent\Collection Listado ordenado para el usuario
+     */
+    private function userShort($user, $hotelsDB) {
+        Log::debug('Start sort for user ' . $user['username']);
+
+        $inRedis = Hotel::getInRedis($user);
+
+        return $hotelsDB;
     }
 
     /**

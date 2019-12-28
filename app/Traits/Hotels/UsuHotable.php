@@ -34,10 +34,11 @@ trait UsuHotable
         $redisKey = 'user:' . $user['id'] . ':hotelStats';
         Log::debug($redisKey);
 
+        // Valor actual en redis
         $redisResp = Redis::get($redisKey);
         $redisRespArray = json_decode($redisResp, true);
         
-
+        // Añadir si no existe
         if ($redisResp == null || !array_key_exists($slug, $redisRespArray)) {
             Log::debug('Añadir nuevo');
             $array = array(
@@ -46,7 +47,7 @@ trait UsuHotable
 
             // AÑADIR NUEVO
             $redisRespArray[$slug] = $array;
-        } else {
+        } else { // Ampliar si existe
             Log::debug('Ampliar');
             $redisRespArray[$slug]['view']++;
         }
@@ -58,4 +59,31 @@ trait UsuHotable
         
         Redis::set($redisKey, $json);
     }
+
+    /**
+     * Sacar listado de hoteles en redis
+     * (id del hotel y visitas)
+     */
+    public static function getInRedis($user) {
+        Log::debug('Get from redis for user ' . $user['username']);
+        
+        $redisKey = 'user:' . $user['id'] . ':hotelStats';
+        $redisResp = Redis::get($redisKey);
+        
+        Log::debug('Redis resp:');
+        Log::debug($redisResp);
+        
+        $redisArray = json_decode($redisResp, true);
+
+        Log::debug($redisArray);
+
+        uasort($redisArray, function ($a, $b) {
+            return $a['view'] <=> $b['view'];
+        });
+
+        Log::debug($redisArray);
+
+        return $redisArray;
+    }
+
 }
