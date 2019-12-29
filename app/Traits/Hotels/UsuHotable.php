@@ -65,25 +65,25 @@ trait UsuHotable
      * (id del hotel y visitas)
      */
     public static function getInRedis($user) {
-        Log::debug('Get from redis for user ' . $user['username']);
+        // Log::debug('Get from redis for user ' . $user['username']);
         
         $redisKey = 'user:' . $user['id'] . ':hotelStats';
         $redisResp = Redis::get($redisKey);
         
-        Log::debug('Redis resp:');
-        Log::debug($redisResp);
-        
-        $redisArray = json_decode($redisResp, true);
+        // Log::debug('Redis resp:');
+        // Log::debug($redisResp);
+        if ($redisResp != null) {
+            $redisArray = json_decode($redisResp, true);
 
-        Log::debug($redisArray);
+            uasort($redisArray, function ($a, $b) {
+                return $b['view'] <=> $a['view'];
+            });
 
-        uasort($redisArray, function ($a, $b) {
-            return $a['view'] <=> $b['view'];
-        });
-
-        Log::debug($redisArray);
-
-        return $redisArray;
+            // Log::debug($redisArray);
+            return $redisArray;
+        } else { // No hay información en redis para ese usuario
+            return null;
+        }
     }
 
 }

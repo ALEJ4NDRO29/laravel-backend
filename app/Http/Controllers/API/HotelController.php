@@ -20,7 +20,6 @@ class HotelController extends ApiController {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        // TODO: Redis get...
         /**
          * Ordenar array que devuelve redis
          * 
@@ -33,10 +32,11 @@ class HotelController extends ApiController {
         $user = auth()->user();
         
         if($user != null) {
-            Log::debug("Logged user");
+            Log::debug("Logged user, list hotels");
 
             $hotelsDB = Hotel::all();
             $hotels = $this->userShort($user, $hotelsDB);
+            return response($hotels);
         } else {
             $hotels = Hotel::all();
         }
@@ -50,11 +50,38 @@ class HotelController extends ApiController {
      * @return \Illuminate\Database\Eloquent\Collection Listado ordenado para el usuario
      */
     private function userShort($user, $hotelsDB) {
+        // TODO : optimizar
+        $response['hotels'] = array(); // Array que se devuelve al cliente
         Log::debug('Start sort for user ' . $user['username']);
 
-        $inRedis = Hotel::getInRedis($user);
+        $transformer = $this->transformer->collection($hotelsDB);
 
-        return $hotelsDB;
+        $inRedis = Hotel::getInRedis($user);
+        if($inRedis == null) { // No hay información en redis para ese usuario
+            return $transformer;
+        }
+
+        // Redis filter (comparar listado de redis con los objetos de bd)
+        // Añadir a $response solo los de redis
+        $toUnset = array();
+        foreach ($inRedis as $key => $value) {
+            for ($i = 0; $i < sizeof($transformer['hotels']); $i++) {
+                $tmp = $transformer['hotels'][$i];
+                if($key == $tmp['slug']) {
+                    array_push($response['hotels'], $tmp);
+                    array_push($toUnset, $tmp['slug']);
+                    break;
+                }
+            }
+        }
+
+        // Añadir los hoteles restantes
+        foreach ($transformer['hotels'] as $value) {
+            if(!in_array($value['slug'], $toUnset))
+                array_push($response['hotels'], $value);
+        }
+
+        return $response;
     }
 
     /**
