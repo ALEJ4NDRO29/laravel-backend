@@ -11,7 +11,8 @@
         {
             "label": "Start Server",
             "type": "shell",
-            "command": "sudo service apache2 stop; sudo service nginx stop; sudo service mysql stop; sudo docker-compose up"
+            "command": "sudo service apache2 stop; sudo service nginx stop; sudo service mysql stop; sudo docker-compose up",
+            "problemMatcher": []
         },
         {
             "label": "Sh php",
